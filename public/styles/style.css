@@ -1,0 +1,25 @@
+* {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#auth-container {
+	border: 1px solid #000000;
+	height: 300px;
+	margin: 0 auto;
+	width: 500px;
+}
+
+.page-items {
+	display: inline-block;
+}
+
+.tabs {
+	display: inline-block;
+	width: 50%;
+}
+
+.term-option {
+	display: inline-block;
+}
