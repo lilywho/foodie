@@ -121,24 +121,49 @@ router.post("/:id/havegones", function(req, res) {
 	});
 });
 
-// // Add entry
-// router.post("/:id/places", function(req, res) {
-// 	console.log("Adding new place.");
-// 	console.log(req.body);
-// 	User.findById(req.params.id).then(function(user) {
-// 		var place = new Place(req.body);
-// 		place.save(function(err) {
-// 			if (err) {
-// 				console.log(err);
-// 			} else {
-// 				console.log("New place was added.");
-// 			}
-// 		});
-// 		user.places.push(place);
-// 		user.save();
-// 		res.send(user);
-// 	});
-// });
+// Delete Have Gone Entry
+router.delete("/:id/havegones/:place_id", function(req, res) {
+	console.log("Deleting a place.");
+	console.log(req.params);
+	User.findOneAndUpdate(
+		{ _id: req.params.id },
+		{ $pull: { havegone: { _id: req.params.place_id } } },
+		function(err, user) {
+			if(err) {
+				console.log(err);
+			} else {
+				user.save(function(err, user) {
+					User.findById(user._id).then(function(user) {
+						res.send(user);
+					});
+				});
+			}
+		}
+	);
+	console.log("Place deleted.");
+});
+
+// Delete To Go Entry
+router.delete("/:id/togos/:place_id", function(req, res) {
+	console.log("Deleting a place.");
+	console.log(req.params);
+	User.findOneAndUpdate(
+		{ _id: req.params.id },
+		{ $pull: { togo: { _id: req.params.place_id } } },
+		function(err, user) {
+			if(err) {
+				console.log(err);
+			} else {
+				user.save(function(err, user) {
+					User.findById(user._id).then(function(user) {
+						res.send(user);
+					});
+				});
+			}
+		}
+	);
+	console.log("Place deleted.");
+});
 
 
 // // Edit entry
@@ -162,47 +187,26 @@ router.post("/:id/havegones", function(req, res) {
 // 	console.log("Entry updated.");
 // })
 
-// Delete Have Gone entry
-router.delete("/:id/havegones/:place_id", function(req, res) {
-	console.log("Deleting a place.");
-	console.log(req.params);
-	User.findOneAndUpdate(
-		{ _id: req.params.id },
-		{ $pull: { havegone: { _id: req.params.place_id } } },
-		function(err, user) {
-			if(err) {
-				console.log(err);
-			} else {
-				user.save(function(err, user) {
-					User.findById(user._id).then(function(user) {
-						res.send(user);
-					});
-				});
-			}
-		}
-	);
-	console.log("Place deleted.");
-});
 
-// Delete Have Gone
-// router.delete("/:id/havegones/:place_id", function(req, res) {
-// 	User.findOneAndUpdate(
-// 		{ _id: req.params.id },
-// 		{ $pull: { havegone: { _id: req.params.place_id } } },
-// 		function(err, user) {
-// 			if(err) {
+
+// // Add entry
+// router.post("/:id/places", function(req, res) {
+// 	console.log("Adding new place.");
+// 	console.log(req.body);
+// 	User.findById(req.params.id).then(function(user) {
+// 		var place = new Place(req.body);
+// 		place.save(function(err) {
+// 			if (err) {
 // 				console.log(err);
 // 			} else {
-// 				user.save(function(err, user) {
-// 					User.findById(user._id).then(function(user) {
-// 						res.send(user);
-// 					});
-// 				});
+// 				console.log("New place was added.");
 // 			}
-// 		}
-// 	);
-// 	console.log("Have gone deleted.")
-// })
+// 		});
+// 		user.places.push(place);
+// 		user.save();
+// 		res.send(user);
+// 	});
+// });
 
 
 module.exports = router;

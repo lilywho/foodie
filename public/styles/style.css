@@ -4,11 +4,37 @@
 	text-align: center;
 }
 
+button {
+
+}
+
 #auth-container {
 	border: 1px solid #000000;
 	height: 300px;
 	margin: 0 auto;
 	width: 500px;
+}
+
+#list {
+	width: 450px;
+}
+
+#log-out > button {
+	float: right;
+	margin-right: 25px; 
+}
+
+#yelp {
+	width: 450px;
+}
+
+.lists {
+	height: 40vh;
+}
+
+.main {
+	margin: 0 auto;
+	display: inline-block;
 }
 
 .page-items {

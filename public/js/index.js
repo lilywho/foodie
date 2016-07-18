@@ -360,7 +360,7 @@ var Page = React.createClass({
 	},
 	render: function() {
 		return (		
-			<div id="page">
+			<div master-container>
 				<LogOutButton deleteCookie={this.props.deleteCookie} />
 				<Yelp
 					id={this.props.id}
@@ -419,8 +419,7 @@ var Yelp = React.createClass({
 	},
 	render: function() {
 		return (
-			<div id="yelp">
-				<h1>Hi</h1>
+			<div id="yelp" className="main">
 				<Search 
 					currentSearch={this.state.currentSearch}
 					getResults={this.getResults}
@@ -453,7 +452,7 @@ var Search = React.createClass({
 		console.log(e.target.value);
 		this.setState({term: e.target.value});
 	},
-	// handleBarSelection: function(e) {
+	// handleBarSelection: function(e) { // handleTermSelection takes care of it all
 	// 	e.preventDefault();
 	// 	this.setState({term: "bars"})
 	// 	console.log("Bars."); 
@@ -493,6 +492,7 @@ var Search = React.createClass({
 			<div id="search-form" onSubmit={this.handleSearch}>
 				<form onSubmit={this.handleEntrySubmit}>
 					<button
+						bsStyle="primary" bsSize="large"
 						className="term-options"
 						onClick={this.handleTermSelection}
 						value="bars">Bars</button>
@@ -514,7 +514,7 @@ var Search = React.createClass({
 					 <input
 						className="number-input"  
 						onChange={this.handleLimitChange}
-						placeholder="Results(25 max)"
+						placeholder="Results (25 MAX)"
 						type="number"
 						max="25"
 						value={this.state.limit}
@@ -561,7 +561,7 @@ var SearchResults = React.createClass({
 		if (currentSearch == null) {
 			return (
 				<div id="results">
-					<h1>Nothing yet.</h1>
+					<h1>Find a place to go...</h1>
 				</div>
 			)
 		} else {
@@ -615,7 +615,7 @@ var SearchResults = React.createClass({
 var List = React.createClass({
 	render: function() {
 		return (
-			<div id="list">
+			<div id="list" className="main">
 				<ToGo
 					toGos={this.props.toGos}
 					addHaveGone={this.props.addHaveGone}
@@ -639,7 +639,9 @@ var ToGo = React.createClass({
 		var toGos = this.props.toGos
 		if (toGos == null) {
 			return (
-				<h1>Add somewhere you want to go!</h1>
+				<div id="have-gone" className="lists">
+					<h1>Add somewhere you want to go!</h1>
+				</div>
 			);
 		} else {
 			var toGoList = this.props.toGos.map(function(toGo) {
@@ -651,7 +653,7 @@ var ToGo = React.createClass({
 			});
 		}
 		return (
-			<div>
+			<div id="to-go" className="lists">
 				{toGoList}
 			</div>
 		);
@@ -678,7 +680,9 @@ var HaveGone = React.createClass({
 		var haveGones = this.props.haveGones
 		if (haveGones == null) {
 			return (
-				<h1>Add somewhere you've been</h1>
+				<div id="have-gone" className="lists">
+					<h1>Add somewhere you've been!</h1>
+				</div>
 			);
 		} else {
 			var haveGoneList = this.props.haveGones.map(function(haveGone) {
@@ -694,13 +698,14 @@ var HaveGone = React.createClass({
 						<button
 							onClick={deleteHaveGone}
 							value={haveGone._id}
+							placeholder="Delete"
 						/>
 					</div>
 				);
 			});
 		}
 		return (
-			<div>
+			<div id="have-gone" className="lists">
 				{haveGoneList}
 			</div>
 		);
