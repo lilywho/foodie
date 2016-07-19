@@ -8,7 +8,15 @@
 }
 
 h1 {
-	font-size: 4rem;
+	font-size: 5rem;
+}
+
+hr {
+	margin: 0;
+}
+
+p {
+	vertical-align: middle;
 }
 
 #auth-container {
@@ -37,8 +45,7 @@ h1 {
 }
 
 #search-default {
-	font-size: 3rem;
-	vertical-align: middle;
+	font-size: 2rem;
 }
 
 #yelp {
@@ -51,19 +58,20 @@ h1 {
 }
 
 .lists {
-	height: 125px;
+	height: 50%;
 	overflow: scroll;
+	vertical-align: middle;
 }
 
 .main {
 	margin: 0 auto;
 	margin-top: 25px;
 	margin-bottom: 25px;
-	/*display: inline-block;*/
+	display: inline-block;
 	width: 450px;
 	border: 1px solid #000000;
 	border-radius: 10px;
-	height: 75vh;
+	height: 450px;
 	top: 0;
 }
 

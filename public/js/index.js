@@ -533,7 +533,7 @@ var Search = React.createClass({
 					onChange={this.handleLimitChange}
 					placeholder="Results (25 MAX)"
 					type="number"
-					max="25"
+					max="26"
 					value={this.state.limit}
 				/><br />
 				<button className="btn btn-info">Search</button>
@@ -611,9 +611,10 @@ var SearchResults = React.createClass({
 			var results = this.props.currentSearch.map(function(result) {
 				return (
 					<div id="search-results">
-						<a href={result.url}>{result.name}</a><br />
-						{result.categories[0][0]}<br />
-						{result.rating} stars
+						<a target="_blank" href={result.url}>{result.name}
+						</a><br />
+							{result.categories[0][0]}<br />
+							{result.rating} stars
 						<span
 							onClick={newToGo}
 							value={result.name}>+</span>
@@ -634,7 +635,6 @@ var List = React.createClass({
 	render: function() {
 		return (
 			<div id="list" className="main">
-				<h3>"Places I Want to Go"</h3>
 				<ToGo
 					toGos={this.props.toGos}
 					getToGos={this.props.getToGos}
@@ -642,7 +642,6 @@ var List = React.createClass({
 					addHaveGone={this.props.addHaveGone}
 				/>
 				<hr/>
-				<h3>"Places I've Gone"</h3>
 				<HaveGone
 					haveGones={this.props.haveGones}
 					id={this.props.id}
@@ -681,7 +680,8 @@ var ToGo = React.createClass({
 		if (toGos.length === 0) {
 			return (
 				<div id="to-go" className="lists">
-					<h4>Add somewhere you want to go!</h4>
+					<h4>"Places I Want to Go"</h4>
+					<h5>Add somewhere you want to go!</h5>
 				</div>
 			);
 		} else {
@@ -701,6 +701,7 @@ var ToGo = React.createClass({
 		}
 		return (
 			<div id="to-go" className="lists">
+			<h4>"Places I Want to Go"</h4>
 				{toGoList}
 			</div>
 		);
@@ -728,7 +729,8 @@ var HaveGone = React.createClass({
 		if (haveGones.length === 0) {
 			return (
 				<div id="have-gone" className="lists">
-					<h4>Add somewhere you've been!</h4>
+					<h4>"Places I've Gone"</h4>
+					<h5>Add somewhere you've been!</h5>
 				</div>
 			);
 		} else {
@@ -755,6 +757,7 @@ var HaveGone = React.createClass({
 		}
 		return (
 			<div id="have-gone" className="lists">
+				<h4>"Places I've Gone"</h4>
 				{haveGoneList}
 			</div>
 		);
