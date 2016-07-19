@@ -522,14 +522,14 @@ var Search = React.createClass({
 					onClick={this.handleTermSelection}
 					value="coffeeshops">Coffeeshops</button><br />
 				<input
-					className="location-input form-control"  
+					className="location-input form-control form-control-sm"  
 					onChange={this.handleLocationChange}
 					placeholder="Near..."
 					type="text"
 					value={this.state.location}
 				/><br />
 				<input
-					className="number-input form-control"  
+					className="number-input form-control form-control-sm"  
 					onChange={this.handleLimitChange}
 					placeholder="Results (25 MAX)"
 					type="number"

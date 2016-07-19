@@ -66,10 +66,10 @@ p {
 .main {
 	margin: 20px;
 	display: inline-block;
-	width: 300px;
+	width: 250px;
 	border: 1px solid #000000;
 	border-radius: 10px;
-	height: 400px;
+	height: 350px;
 	vertical-align: top;
 }
 
