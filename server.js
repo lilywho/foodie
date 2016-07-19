@@ -12,6 +12,7 @@ var express = require('express'),
 	db = process.env.MONGODB_URI || 'mongodb://localhost/foodie',
 	port = process.env.PORT || 3000;
 
+
 // ----------------------------------------
 // MIDDLEWARE
 // ----------------------------------------

@@ -172,10 +172,10 @@ var LogInForm = React.createClass({
 	render: function() {
 		return (
 			<div className="login-form">
-			<h1>Hi.</h1>
+			<h2>Hello.</h2>
 				<form onSubmit={this.handleSubmit}>
 					<input
-						className="username-input"
+						className="username-input form-control"
 						onChange={this.handleLogInFormChange.bind(this, "username")} // bind so "this" is inputted data
 					  placeholder="Username"
 					  type="text"
@@ -183,14 +183,16 @@ var LogInForm = React.createClass({
 					 />
 					<br />
 					<input
-						className="password-input"
+						className="password-input form-control"
 						onChange={this.handleLogInFormChange.bind(this, "password")} // bind so "this" is inputted data
 					  placeholder="Password"
-					  type="text"
+					  type="password"
 					  value={this.state.password}
 					 />
 					<br />
-					<input type="submit" />
+					<input
+						className="btn btn-info"
+						type="submit" />
 				</form>
 			</div>
 		)
@@ -215,10 +217,14 @@ var SignUpForm = React.createClass({
 		var email = this.state.email.trim();
 		var username = this.state.username.trim();
 		var password = this.state.password.trim();
-		console.log("218: ", email, username, password);
+		console.log("SignUpForm.handleSubmit: ", email, username, password);
 		this.signUpAJAX(email, username, password); 
 	},
 	handleAutoLogIn: function(username, password) {
+		console.log('--------------------------------------')
+		console.log("SignUpForm.handleAutoLogIn.");
+		console.log("username", username)
+		console.log("password", password)
 		var self = this;
 		var callback = function(id) {
 			self.props.onChange(id);
@@ -234,9 +240,9 @@ var SignUpForm = React.createClass({
 				console.log("User is logged in.")
 				Cookies.set("jwt_token", data.token);
 				console.log("236: ", data.id);
-				// this.props.onChange(data.id)
-				// this.props.onChange(id)
-				// callback(data.id)
+				this.props.onChange(data.id)
+				this.props.onChange(data.id)
+				callback(data.id)
 			}.bind(this),
 			error: function(xhr, status, err) {
 				console.error(status, err.toString());
@@ -253,7 +259,8 @@ var SignUpForm = React.createClass({
 				password: password
 			},
 			success: function(data) {
-				console.log("256: ", data);
+				console.log('--------------------------------------')
+				console.log("SignUpForm.signUpAJAX success. data: ", data);
 				this.handleAutoLogIn(username, password);
 			}.bind(this)
 		});
@@ -261,9 +268,10 @@ var SignUpForm = React.createClass({
 	render: function() {
 		return (
 			<div className="signup-form">
+				<h2>Welcome.</h2>
 				<form onSubmit={this.handleSubmit}>
 					<input
-						className="email-input"
+						className="email-input form-control"
 						onChange={this.handleSignUpFormChange.bind(this, "email")}
 						placeholder="Email"
 						type="text"
@@ -271,7 +279,7 @@ var SignUpForm = React.createClass({
 					 />
 					<br />
 					<input
-						className="username-input"
+						className="username-input form-control"
 						onChange={this.handleSignUpFormChange.bind(this, "username")}
 						placeholder="Username"
 						type="text"
@@ -279,14 +287,16 @@ var SignUpForm = React.createClass({
 					 />
 					<br />
 					<input
-						className="password-input"
+						className="password-input form-control"
 						onChange={this.handleSignUpFormChange.bind(this, "password")}
 						placeholder="Password"
 						type='text'
 						value={this.state.password}
 					 />
 					<br />
-					<input type="submit" />
+					<input
+						className="btn btn-info"
+						type="submit" />
 				</form>
 			</div>
 		);
@@ -300,8 +310,8 @@ var Page = React.createClass({
 	getInitialState: function() {
 		return (
 			{
-				toGos: null,
-				haveGones: null,
+				toGos: [],
+				haveGones: [],
 				name: ""	
 			}
 		);
@@ -334,26 +344,28 @@ var Page = React.createClass({
 		this.getToGos(this.props.id);
 	},
 	getHaveGones: function(id) {
-		;$.ajax({
+		$.ajax({
 			url: "users/" + id + "/havegones",
 			method: "GET",
 			success: function(data) {
+				console.log("-----------------------------------")
+				console.log("in Page.getHaveGones AJAX")
 				console.log(data);
 				this.setState({haveGones: data});
 			}.bind(this)
 		});
 	},
 	getToGos: function(id) {
-		console.log('in getToGos');
-		console.log(id);
-		console.log(this.props.id);
+		// console.log('in getToGos');
+		// console.log(id);
+		// console.log(this.props.id);
 		$.ajax({
 			url: "users/" + id + "/togos",
 			method: "GET",
 			success: function(data) {
-				console.log('in Page.getToGos');
-				console.log(data);
-				console.log('------------')
+				// console.log('in Page.getToGos');
+				// console.log(data);
+				// console.log('------------')
 				this.setState({toGos: data});
 			}.bind(this)
 		})
@@ -375,6 +387,7 @@ var Page = React.createClass({
 					haveGones={this.state.haveGones}
 					addHaveGone={this.addHaveGone}
 					addToGo={this.addToGo}
+					getToGos={this.getToGos}
 					getHaveGones={this.getHaveGones}
 				/> 
 			</div>
@@ -390,7 +403,9 @@ var LogOutButton = React.createClass({
 	render: function() {
 		return (
 			<div id="log-out">
-				<button onClick={this.handleLogOut}>
+				<button
+					className="btn btn-info"
+					onClick={this.handleLogOut}>
 					Log Out
 				</button>
 			</div>
@@ -449,7 +464,7 @@ var Search = React.createClass({
 	},
 	handleTermSelection: function(e) {
 		e.preventDefault();
-		console.log(e.target.value);
+		// console.log(e.target.value);
 		this.setState({term: e.target.value});
 	},
 	// handleBarSelection: function(e) { // handleTermSelection takes care of it all
@@ -463,13 +478,13 @@ var Search = React.createClass({
 	// 	console.log("Restaurants.");
 	// },
 	handleLocationChange: function(e) {
-		console.log(e.target.value);
+		// console.log(e.target.value);
 		this.setState({
 			location: e.target.value
 		});
 	},
 	handleLimitChange: function(e) {
-		console.log(e.target.value);
+		// console.log(e.target.value);
 		this.setState({
 			limit: e.target.value
 		});
@@ -479,7 +494,7 @@ var Search = React.createClass({
 		var term = this.state.term
 		var location = this.state.location.trim();
 		var limit = this.state.limit.trim();
-		console.log(term, location, limit);
+		// console.log(term, location, limit);
 		this.props.getResults(term, location, limit);
 		this.setState({
 			term: "",
@@ -489,39 +504,41 @@ var Search = React.createClass({
 	},
 	render: function() {
 		return (
-			<div id="search-form" onSubmit={this.handleSearch}>
-				<form onSubmit={this.handleEntrySubmit}>
-					<button
-						bsStyle="primary" bsSize="large"
-						className="term-options"
-						onClick={this.handleTermSelection}
-						value="bars">Bars</button>
-					<button
-						className="term-options"
-						onClick={this.handleTermSelection}
-						value="restaurants">Restaurants</button>
-						<button
-						className="term-options"
-						onClick={this.handleTermSelection}
-						value="coffeeshops">Coffeeshops</button><br />
-					<input
-						className="location-input"  
-						onChange={this.handleLocationChange}
-						placeholder="Near..."
-						type="text"
-						value={this.state.location}
-					/><br />
-					 <input
-						className="number-input"  
-						onChange={this.handleLimitChange}
-						placeholder="Results (25 MAX)"
-						type="number"
-						max="25"
-						value={this.state.limit}
-					/><br />
-					<button>Search</button>
-				</form>
-			</div>
+			// <div id="search" onSubmit={this.handleSearch}>
+			<form
+				onSubmit={this.handleSearch}
+				id="search-form"
+				>
+				<button
+					className="term-options btn btn-primary"
+					onClick={this.handleTermSelection}
+					value="bars">Bars</button>
+				<button
+					className="term-options btn btn-primary"
+					onClick={this.handleTermSelection}
+					value="restaurants">Restaurants</button>
+				<button
+					className="term-options btn btn-primary"
+					onClick={this.handleTermSelection}
+					value="coffeeshops">Coffeeshops</button><br />
+				<input
+					className="location-input form-control"  
+					onChange={this.handleLocationChange}
+					placeholder="Near..."
+					type="text"
+					value={this.state.location}
+				/><br />
+				<input
+					className="number-input form-control"  
+					onChange={this.handleLimitChange}
+					placeholder="Results (25 MAX)"
+					type="number"
+					max="25"
+					value={this.state.limit}
+				/><br />
+				<button className="btn btn-info">Search</button>
+			</form>
+			// </div>
 		);
 	}
 });
@@ -533,25 +550,25 @@ var SearchResults = React.createClass({
 		}
 	},
 	addToGo: function(id, place) {
-		console.log("Sending POST to go.");
+		// console.log("Sending POST to go.");
 		$.ajax({
 			url: "/users/" + id + "/togos",
 			method: "POST",
 			data: {name: place},
 			success: function(data) {
-				console.log('in SearchResults.addToGo success');
+				// console.log('in SearchResults.addToGo success');
 				this.props.getToGos(id);
 			}.bind(this)
 		});
 	},
 	addHaveGone: function(id, place) {
-		console.log("Sending POST have gone.");
+		// console.log("Sending POST have gone.");
 		$.ajax({
 			url: "/users/" + id + "/havegones",
 			method: "POST",
 			data: {name: place},
 			success: function(data) {
-				console.log('in SearchResults.addHaveGone success');
+				// console.log('in SearchResults.addHaveGone success');
 				this.props.getHaveGones(id);
 			}.bind(this)
 		});
@@ -560,8 +577,8 @@ var SearchResults = React.createClass({
 		var currentSearch = this.props.currentSearch;
 		if (currentSearch == null) {
 			return (
-				<div id="results">
-					<h1>Find a place to go...</h1>
+				<div id="search-default">
+					<p>Find a place to go...</p>
 				</div>
 			)
 		} else {
@@ -570,32 +587,33 @@ var SearchResults = React.createClass({
 			// console.log(this.props.currentSearch.categories)
 			var self = this;
 			var newToGo = function(e) {
-				console.log('in SearchResults.render/newToGo')
+				// console.log('in SearchResults.render/newToGo')
 				var id = self.props.id;
-				console.log(e.target.value);
-				var valName = e.target.value;
+				// console.log(e.target.value);
+				var valName = e.target.getAttribute("value");
 				self.setState({name: valName});
 				var place = valName;
-				console.log(place);
+				// console.log(place);
 				self.addToGo(id, place);
 			};
 			var newHaveGone = function(e) {
-				console.log('in SearchResults.render/newHaveGone')
+				// console.log('in SearchResults.render/newHaveGone')
 				var id = self.props.id;
-				console.log(e.target.value);
-				var valName = e.target.value;
+				// console.log(e.target);
+				// console.log(e.target.value);
+				// console.log(e.target.getAttribute("value"))
+				var valName = e.target.getAttribute("value");
 				self.setState({name: valName});
 				var place = valName;
-				console.log(place);
+				// console.log(place);
 				self.addHaveGone(id, place);
 			};
 			var results = this.props.currentSearch.map(function(result) {
 				return (
-					<div>
+					<div id="search-results">
 						<a href={result.url}>{result.name}</a><br />
 						{result.categories[0][0]}<br />
-						{result.location.neighborhoods}<br />
-						{result.rating}
+						{result.rating} stars
 						<span
 							onClick={newToGo}
 							value={result.name}>+</span>
@@ -616,10 +634,15 @@ var List = React.createClass({
 	render: function() {
 		return (
 			<div id="list" className="main">
+				<h3>"Places I Want to Go"</h3>
 				<ToGo
 					toGos={this.props.toGos}
+					getToGos={this.props.getToGos}
+					id={this.props.id}
 					addHaveGone={this.props.addHaveGone}
 				/>
+				<hr/>
+				<h3>"Places I've Gone"</h3>
 				<HaveGone
 					haveGones={this.props.haveGones}
 					id={this.props.id}
@@ -632,15 +655,33 @@ var List = React.createClass({
 });
 
 var ToGo = React.createClass({
+	deleteToGoAJAX: function(e) {
+
+		var id = this.props.id;
+		var place_id = e.target.value;		
+		console.log("-----------------------------------");
+		console.log("Sending ToGo DELETE request.");
+		console.log("id", id)
+		console.log("place_id", place_id)
+		$.ajax({
+			url: "/users/" + id + "/togos/" + place_id,
+			method: "DELETE",
+			success: function() {
+				console.log("In DELETE success.");
+				this.props.getToGos(id);
+			}.bind(this)
+		});
+	},
 	render: function() {
-		console.log('---------------------------');
-		console.log('in ToGo.render');
-		console.log('this.props', this.props);
-		var toGos = this.props.toGos
-		if (toGos == null) {
+		// console.log('---------------------------');
+		// console.log('in ToGo.render');
+		// console.log('this.props', this.props);
+		var toGos = this.props.toGos;
+		var self = this;
+		if (toGos.length === 0) {
 			return (
-				<div id="have-gone" className="lists">
-					<h1>Add somewhere you want to go!</h1>
+				<div id="to-go" className="lists">
+					<h4>Add somewhere you want to go!</h4>
 				</div>
 			);
 		} else {
@@ -648,6 +689,12 @@ var ToGo = React.createClass({
 				return (
 					<div>
 						{toGo.name}
+					<button
+						onClick={self.deleteToGoAJAX}
+						value={toGo._id}
+					>
+					Delete
+					</button>	
 					</div>
 				);
 			});
@@ -664,24 +711,24 @@ var HaveGone = React.createClass({
 	deleteHaveGoneAJAX: function(id, place_id) {
 		// var id = this.props.id;
 		// var place_id = e.target.value;
-		console.log("Sending HaveGone DELETE request.");
+		// console.log("Sending HaveGone DELETE request.");
 		$.ajax({
 			url: "/users/" + id + "/havegones/" + place_id,
 			method: "DELETE",
 			success: function() {
-				console.log("In DELETE success.");
+				// console.log("In DELETE success.");
 				this.props.getHaveGones(id);
 			}.bind(this)
 		});
 	},
 	render: function() {
 		var self = this;
-		console.log('this.props', this.props);
+		// console.log('this.props', this.props);
 		var haveGones = this.props.haveGones
-		if (haveGones == null) {
+		if (haveGones.length === 0) {
 			return (
 				<div id="have-gone" className="lists">
-					<h1>Add somewhere you've been!</h1>
+					<h4>Add somewhere you've been!</h4>
 				</div>
 			);
 		} else {
@@ -692,14 +739,16 @@ var HaveGone = React.createClass({
 					var place_id = e.target.value;
 					self.deleteHaveGoneAJAX(id, place_id)
 				}
+
 				return (
 					<div>
 						{haveGone.name}
 						<button
 							onClick={deleteHaveGone}
 							value={haveGone._id}
-							placeholder="Delete"
-						/>
+						>
+						Delete
+						</button>	
 					</div>
 				);
 			});

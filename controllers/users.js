@@ -1,3 +1,7 @@
+var printDivide = function(){
+	console.log('-------------------------------------');
+};
+
 // ----------------------------------------
 // REQUIREMENTS
 // ----------------------------------------
@@ -41,9 +45,13 @@ router.get("/places/:term/:location/:limit", function(req, res) {
 // ----------------------------------------
 // Create user
 router.post("/", function(req, res) {
-	// console.log(req);
+	printDivide();
+	console.log("Hitting users controller.")
+	console.log('req.body', req.body);
+	req.body.havegone = [];
 	User.create(req.body, function(err, user) {
-		console.log("Hitting users controller.")
+		console.log('err:', err);
+		console.log('user:', user);
 		if(err) {
 			console.log(err);
 			res.status(500).end();
