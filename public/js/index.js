@@ -372,7 +372,7 @@ var Page = React.createClass({
 	},
 	render: function() {
 		return (		
-			<div master-container>
+			<div id="page">
 				<LogOutButton deleteCookie={this.props.deleteCookie} />
 				<Yelp
 					id={this.props.id}
