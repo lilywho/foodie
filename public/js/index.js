@@ -508,17 +508,18 @@ var Search = React.createClass({
 			<form
 				onSubmit={this.handleSearch}
 				id="search-form"
-				>
+				className="input-group-sm"
+			>
 				<button
-					className="term-options btn btn-primary"
+					className="term-options btn btn-primary btn-sm"
 					onClick={this.handleTermSelection}
 					value="bars">Bars</button>
 				<button
-					className="term-options btn btn-primary"
+					className="term-options btn btn-primary btn-sm"
 					onClick={this.handleTermSelection}
 					value="restaurants">Restaurants</button>
 				<button
-					className="term-options btn btn-primary"
+					className="term-options btn btn-primary btn-sm"
 					onClick={this.handleTermSelection}
 					value="coffeeshops">Coffeeshops</button><br />
 				<input
@@ -536,7 +537,7 @@ var Search = React.createClass({
 					max="26"
 					value={this.state.limit}
 				/><br />
-				<button className="btn btn-info">Search</button>
+				<button className="btn btn-info btn-sm">Search</button>
 			</form>
 			// </div>
 		);
@@ -612,15 +613,17 @@ var SearchResults = React.createClass({
 				return (
 					<div id="search-results">
 						<a target="_blank" href={result.url}>{result.name}
-						</a><br />
-							{result.categories[0][0]}<br />
-							{result.rating} stars
+						</a>
 						<span
 							onClick={newToGo}
-							value={result.name}>+</span>
+							value={result.name}
+							className="glyphicon glyphicon-plus"></span>
 						<span
 							onClick={newHaveGone}
-							value={result.name}>✓</span>
+							value={result.name}
+							className="glyphicon glyphicon-ok"></span><br />
+							{result.categories[0][0]}<br />
+							{result.rating} stars
 					</div>
 				);
 			});
@@ -655,7 +658,6 @@ var List = React.createClass({
 
 var ToGo = React.createClass({
 	deleteToGoAJAX: function(e) {
-
 		var id = this.props.id;
 		var place_id = e.target.value;		
 		console.log("-----------------------------------");
