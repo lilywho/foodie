@@ -26,10 +26,6 @@ p {
 	width: 500px;
 }
 
-#list {
-	width: 450px;
-}
-
 #log-out {
 	display: block;
 }
@@ -55,6 +51,10 @@ p {
 .form-control {
 	width: 75%;
 	margin: 0 auto;
+}
+
+.form-control-sm {
+	padding: 3px;
 }
 
 .lists {
