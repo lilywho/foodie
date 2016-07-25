@@ -1,5 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 
+/*@font-face {
+  font-family: 'icons';
+  src: url('./fontello.css');
+}*/
+
+@font-face {
+  font-family: 'icons';
+  src: url('./fonts/fontello.ttf');
+}
+
 * {
 	font-family: 'Raleway', sans-serif;
 	margin: 0;
@@ -55,6 +65,10 @@ p {
 
 .form-control-sm {
 	padding: 3px;
+}
+
+.icons {
+	font-family: 'icons';
 }
 
 .lists {

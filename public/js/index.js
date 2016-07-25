@@ -14,7 +14,7 @@ var App = React.createClass({
 			id: "",
 			user: findCookie
 		}
-		console.log("17: ", findCookie);
+		console.log(findCookie);
 	},
 	deleteCookie: function() {
 		Cookies.remove("jwt_token"); // delete cookie, require authorization again
@@ -157,11 +157,11 @@ var LogInForm = React.createClass({
 				password: password
 			},
 			success: function(data) {
-				console.log("160: ", data)
+				console.log("logInAJAX success: ", data)
 				console.log("User is logged in.")
 				Cookies.set("jwt_token", data.token);
-				console.log("163: ", this);
-				console.log("164: ", data.id)
+				console.log("logInAJAX success this: ",this);
+				console.log("logInAJAX success data.id: ", data.id)
 				this.props.onChange(data.id); // user set equal to true, id set equal to data.id
 			}.bind(this),
 			error: function(xhr, status, err) {
@@ -239,7 +239,7 @@ var SignUpForm = React.createClass({
 			success: function(data) {
 				console.log("User is logged in.")
 				Cookies.set("jwt_token", data.token);
-				console.log("236: ", data.id);
+				console.log("handleAutoLogIn AJAX success data.id: ", data.id)
 				this.props.onChange(data.id)
 				this.props.onChange(data.id)
 				callback(data.id)
@@ -397,7 +397,7 @@ var Page = React.createClass({
 
 var LogOutButton = React.createClass({
 	handleLogOut: function() {
-		console.log("491: ", this);
+		console.log("LogOutButton this: ", this);
 		this.props.deleteCookie();
 	},
 	render: function() {
@@ -617,11 +617,11 @@ var SearchResults = React.createClass({
 						<span
 							onClick={newToGo}
 							value={result.name}
-							className="glyphicon glyphicon-plus"></span>
+							className="icons">F</span>
 						<span
 							onClick={newHaveGone}
 							value={result.name}
-							className="glyphicon glyphicon-ok"></span><br />
+							className="fonts">A</span><br />
 							{result.categories[0][0]}<br />
 							{result.rating} stars
 					</div>
@@ -691,12 +691,13 @@ var ToGo = React.createClass({
 				return (
 					<div>
 						{toGo.name}
-					<button
+					<div
 						onClick={self.deleteToGoAJAX}
 						value={toGo._id}
+						className="icons"
 					>
-					Delete
-					</button>	
+					B
+					</div>	
 					</div>
 				);
 			});
@@ -740,19 +741,26 @@ var HaveGone = React.createClass({
 				//var self = this;
 				var deleteHaveGone = function(e) {
 					var id = self.props.id;
+					console.log(e.target);
+					console.log(e.target.value);
+					console.log(e.value);
 					var place_id = e.target.value;
+					console.log("id: ", id);
+					console.log("place_id: ", place_id);
 					self.deleteHaveGoneAJAX(id, place_id)
 				}
 
 				return (
 					<div>
 						{haveGone.name}
-						<button
+						{haveGone._id}
+						<span
+							className="icons"
 							onClick={deleteHaveGone}
 							value={haveGone._id}
 						>
-						Delete
-						</button>	
+						B
+						</span>	
 					</div>
 				);
 			});
