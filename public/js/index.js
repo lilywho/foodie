@@ -621,7 +621,7 @@ var SearchResults = React.createClass({
 						<span
 							onClick={newHaveGone}
 							value={result.name}
-							className="fonts">A</span><br />
+							className="icons">A</span><br />
 							{result.categories[0][0]}<br />
 							{result.rating} stars
 					</div>
